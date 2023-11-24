@@ -1,3 +1,4 @@
+github.com/cdvelop/gotools v0.0.56 h1:v3sM4Q7o6EKnJLlkhjuA4H3Cy+b7+xZLcbjE91BjjLc=
 github.com/cdvelop/input v0.0.54 h1:WcXfYqEHA3qqm1YFJNT7eaYR1goKnScfZ78Sd0DgBmI=
-github.com/cdvelop/timetools v0.0.20 h1:or7BEMMYDM3THnGmgR0vrrt8WfDJmPRyljZ55HdoMbg=
 github.com/cdvelop/unixid v0.0.20 h1:A+w5tJEC6rM67H9ko22AS69V0u1tc04yOoZqtTy6utM=
+golang.org/x/text v0.14.0 h1:ScX5w1eTa3QqT8oi6+ziP7dTV1S2+ALU0bI+0zXKWiQ=

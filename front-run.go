@@ -2,9 +2,23 @@ package wetest
 
 import "github.com/cdvelop/model"
 
-func (h *weTest) RunModuleTests(usesCaseTests []model.Response, result func(err string)) {
+func (h *weTest) RunE2EfrontTests() {
+	const this = "RunE2EfrontTests error "
 	h.Log("- INICIANDO tests -")
-	h.runTestsSequentially(usesCaseTests, 0, 0, result)
+
+	string_content, err := h.SelectContent("meta[name='JsonBootTests']", "content")
+	if err != "" {
+		h.Log(this + err)
+		return
+	}
+
+	usesCaseTests, err := h.DecodeResponses([]byte(string_content))
+	if err != "" {
+		h.Log(this + err)
+		return
+	}
+
+	h.runTestsSequentially(usesCaseTests, 0, 0, h.resultTests)
 }
 
 func (h *weTest) runTestsSequentially(useCaseTests []model.Response, testIndex int, dataIndex int, result func(err string)) {

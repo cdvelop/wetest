@@ -5,23 +5,29 @@ import (
 	"github.com/cdvelop/object"
 )
 
-func Add(h *model.Handlers, m *model.Module) (t *weTest, err string) {
+func AddE2ETestAdapter(h *model.Handlers) (err string) {
 
-	t = &weTest{}
+	m := &model.Module{ModuleName: "wetest"}
 
-	err = object.AddToHandlerFromStructs(t, m, h)
+	t := &weTest{}
+
+	object, err := object.BuildObjectFromStruct(t)
 	if err != "" {
-		return nil, "wetest add " + err
+		return "AddE2ETestAdapter " + err
 	}
+	t.Object.Module = m
+	m.Handlers = h
+	t.Object = object
+
 	h.TestAdapter = t
 
 	return
 }
 
-func (h *weTest) AddTest(uses_case ...model.Response) {
+func (h *weTest) AddUsesCaseTest(uses_case ...model.Response) {
 	h.uses_cases = append(h.uses_cases, uses_case...)
 }
 
-func (h weTest) GetTests() (uses_case []model.Response) {
-	return h.uses_cases
+func (h weTest) TestActions() (model.BackEndActions, model.FrontEndActions) {
+	return h.BackEndActions, h.FrontEndActions
 }
