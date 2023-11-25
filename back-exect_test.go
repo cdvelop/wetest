@@ -1,7 +1,6 @@
 package wetest_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/cdvelop/cutkey"
@@ -62,8 +61,7 @@ func TestServerActions(t *testing.T) {
 		t.Fatalf("\nse esperaba que la fecha\n=>fuera:\n%v\n\n=>pero se obtuvo:\n%v\n", date_required, today)
 		return
 	}
-
-	fmt.Println("FECHA ACTUAL:", today)
+	// fmt.Println("FECHA ACTUAL:", today)
 
 	// data_encode, err := h.EncodeResponses(usesCase...)
 	// if err != "" {

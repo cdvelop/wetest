@@ -1,4 +1,6 @@
 github.com/cdvelop/gotools v0.0.56 h1:v3sM4Q7o6EKnJLlkhjuA4H3Cy+b7+xZLcbjE91BjjLc=
-github.com/cdvelop/input v0.0.54 h1:WcXfYqEHA3qqm1YFJNT7eaYR1goKnScfZ78Sd0DgBmI=
-github.com/cdvelop/unixid v0.0.20 h1:A+w5tJEC6rM67H9ko22AS69V0u1tc04yOoZqtTy6utM=
+github.com/cdvelop/input v0.0.55 h1:inxwWiqKu9UVtynVtgIPO6to/mrlv89kuk1H3Lwhnk8=
+github.com/cdvelop/output v0.0.16 h1:4hmAy0kF98dVEWj2qq6fMtiq3pz1ZTDmxf9AgHiBb7g=
+github.com/cdvelop/output v0.0.16/go.mod h1:J0NdlSxlURjPlX82VUmaq7o9Z4omOSH0yLUoioPdELc=
+github.com/cdvelop/unixid v0.0.21 h1:I+i5gpdS4QhQA4QqXckeX87Bh70B6zyugl4wWZ6gyNE=
 golang.org/x/text v0.14.0 h1:ScX5w1eTa3QqT8oi6+ziP7dTV1S2+ALU0bI+0zXKWiQ=

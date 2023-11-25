@@ -2,9 +2,12 @@ module github.com/cdvelop/wetest
 
 go 1.20
 
-require github.com/cdvelop/model v0.0.71
+require github.com/cdvelop/model v0.0.72
 
-require github.com/cdvelop/timetools v0.0.21 // indirect
+require (
+	github.com/cdvelop/output v0.0.16 // indirect
+	github.com/cdvelop/timetools v0.0.21 // indirect
+)
 
 require (
 	github.com/cdvelop/cutkey v0.6.0

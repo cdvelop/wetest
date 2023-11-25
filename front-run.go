@@ -3,14 +3,20 @@ package wetest
 import "github.com/cdvelop/model"
 
 func (h *weTest) RunE2EfrontTests() {
-	const this = "RunE2EfrontTests error "
-	h.Log("- INICIANDO tests -")
+	const this = "RunE2EfrontTests "
 
 	string_content, err := h.SelectContent("meta[name='JsonBootTests']", "content")
 	if err != "" {
 		h.Log(this + err)
 		return
 	}
+	// h.Log("CONTENIDO:", string_content)
+
+	if string_content == "none" {
+		h.Log(this + "sin tests para ejecutar")
+		return
+	}
+	h.Log("- INICIANDO tests -")
 
 	usesCaseTests, err := h.DecodeResponses([]byte(string_content))
 	if err != "" {

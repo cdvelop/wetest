@@ -24,8 +24,25 @@ func AddE2ETestAdapter(h *model.Handlers) (err string) {
 	return
 }
 
-func (h *weTest) AddUsesCaseTest(uses_case ...model.Response) {
-	h.uses_cases = append(h.uses_cases, uses_case...)
+func (h *weTest) AddUsesCaseTest(uses_cases ...model.Response) {
+
+	var uc_frontend []model.Response
+	var uc_backend []model.Response
+
+	// separamos los casos de uso
+	for _, uc := range uses_cases {
+		if uc.Action == h.Backend_action {
+			h.execBackendActions(uc)
+
+		} else if uc.Action == h.Frontend_action {
+
+			uc_frontend = append(uc_frontend, uc)
+			h.frontend_uses_case = append(h.frontend_uses_case, uc)
+
+			uc_backend = append(uc_backend, uc)
+		}
+	}
+
 }
 
 func (h weTest) TestActions() (model.BackEndActions, model.FrontEndActions) {
