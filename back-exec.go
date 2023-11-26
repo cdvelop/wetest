@@ -7,7 +7,7 @@ import (
 )
 
 func (h weTest) execBackendActions(uc_actions ...model.Response) {
-
+	h.Log("EJECUTANDO execBackendActions....")
 	for i, uc := range uc_actions {
 		var this = "-test " + strconv.Itoa(i) + " "
 

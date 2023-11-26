@@ -2,7 +2,7 @@ module github.com/cdvelop/wetest
 
 go 1.20
 
-require github.com/cdvelop/model v0.0.72
+require github.com/cdvelop/model v0.0.73
 
 require (
 	github.com/cdvelop/output v0.0.16 // indirect
