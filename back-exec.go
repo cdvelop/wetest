@@ -2,19 +2,19 @@ package wetest
 
 import (
 	"strconv"
-
-	"github.com/cdvelop/model"
 )
 
-func (h weTest) execBackendActions(uc_actions ...model.Response) {
+func (h WeTest) execBackendActions(uses_case ...UseCase) {
 	h.Log("EJECUTANDO execBackendActions....")
-	for i, uc := range uc_actions {
+	for i, uc := range uses_case {
 		var this = "-test " + strconv.Itoa(i) + " "
 
-		for _, a := range uc.Data {
-			h.Log(this+h.Set_server_date+":", a[h.Set_server_date])
-			if a[h.Set_server_date] != "" {
-				h.SetDate(a[h.Set_server_date])
+		for _, t := range uc.TestActions {
+
+			h.Log(this+h.Set_server_date+":", t.Set_server_date)
+
+			if t.Set_server_date != "" {
+				h.SetDate(t.Set_server_date)
 			}
 
 		}

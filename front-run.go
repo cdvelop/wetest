@@ -1,33 +1,52 @@
 package wetest
 
-import "github.com/cdvelop/model"
-
-func (h *weTest) RunE2EfrontTests() {
+func (t *WeTest) RunE2EfrontTests() {
 	const this = "RunE2EfrontTests "
 
-	string_content, err := h.SelectContent("meta[name='JsonBootTests']", "content")
-	if err != "" {
-		h.Log(this + err)
-		return
-	}
-	// h.Log("CONTENIDO:", string_content)
+	// string_content, err := h.SelectContent("meta[name='JsonBootTests']", "content")
+	// if err != "" {
+	// 	h.Log(this + err)
+	// 	return
+	// }
+	// // h.Log("CONTENIDO:", string_content)
 
-	if string_content == "none" {
-		h.Log(this + "sin tests para ejecutar")
-		return
-	}
-	h.Log("- INICIANDO tests -")
+	// if string_content == "none" {
+	// 	h.Log(this + "sin tests para ejecutar")
+	// 	return
+	// }
+	t.Log("- INICIANDO tests -")
 
-	usesCaseTests, err := h.DecodeResponses([]byte(string_content))
-	if err != "" {
-		h.Log(this + err)
-		return
-	}
+	for _, v := range t.uses_case {
 
-	h.runTestsSequentially(usesCaseTests, 0, 0, h.resultTests)
+		t.Log(v.Description)
+	}
+	// t.FetchAdapter.SendOneRequest("GET", "read", t.ObjectName+"2", map[string]string{t.Required_tests: "ok"}, func(result []map[string]string, err string) {
+
+	// 	if err != "" {
+	// 		t.Log(this + err)
+	// 		return
+	// 	}
+
+	// })
+	// t.FetchAdapter.SendOneRequest("POST", "read", t.ObjectName, map[string]string{t.Required_tests: "ok"}, func(result []map[string]string, err string) {
+
+	// 	if err != "" {
+	// 		t.Log(this + err)
+	// 		return
+	// 	}
+
+	// })
+
+	// usesCaseTests, err := h.DecodeResponses([]byte(string_content))
+	// if err != "" {
+	// 	h.Log(this + err)
+	// 	return
+	// }
+
+	t.runTestsSequentially(t.uses_case, 0, 0, t.resultTests)
 }
 
-func (h *weTest) runTestsSequentially(useCaseTests []model.Response, testIndex int, dataIndex int, result func(err string)) {
+func (h *WeTest) runTestsSequentially(useCaseTests []UseCase, testIndex int, dataIndex int, result func(err string)) {
 	if testIndex >= len(useCaseTests) {
 		// Todas las pruebas han sido completadas
 		result("")
@@ -36,13 +55,13 @@ func (h *weTest) runTestsSequentially(useCaseTests []model.Response, testIndex i
 
 	test := useCaseTests[testIndex]
 
-	if dataIndex >= len(test.Data) {
+	if dataIndex >= len(test.TestActions) {
 		// Todas las pruebas de este caso de uso han sido completadas
 		h.runTestsSequentially(useCaseTests, testIndex+1, 0, result)
 		return
 	}
 
-	h.processUnitTest(dataIndex, test.Data[dataIndex], func(err string) {
+	h.processUnitTest(dataIndex, test.TestActions[dataIndex], func(err string) {
 		if err != "" {
 			// h.Log("NO CONTINUAR TEST:", dataIndex)
 			result(err)

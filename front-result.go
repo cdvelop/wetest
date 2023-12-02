@@ -1,10 +1,10 @@
 package wetest
 
-func (h weTest) resultTests(err string) {
+func (h WeTest) resultTests(err string) {
 	h.Log("- RESULTADO tests -")
 
 	if err != "" {
-		h.Log("error", err)
+		h.Log(err)
 	} else {
 		h.Log("OK")
 	}

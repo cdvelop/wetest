@@ -2,52 +2,64 @@ package wetest
 
 import "strconv"
 
-func (h *weTest) processUnitTest(i int, t map[string]string, result func(err string)) {
+func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
 	var this = "-test " + strconv.Itoa(i) + " "
-	h.Log("DATA PARA EL TEST:", t)
 
 	h.milliseconds += 100
 	var err string
 
-	if t[h.Wait] != "" {
-		wait, e := strconv.Atoi(t[h.Wait])
+	if t.Wait != "" {
+		wait, e := strconv.Atoi(t.Wait)
 		if e == nil {
 			h.milliseconds += wait
 		}
 	}
 
-	if t[h.Name_object_use] != "" {
-		h.current_object, err = h.GetObjectByName(t[h.Name_object_use])
+	var object_use string
+	if t.Name_object_use != "" {
+		object_use = t.Name_object_use
+	}
+	if t.Form_complete != "" {
+		object_use = t.Form_complete
+	}
+
+	if object_use != "" {
+		h.current_object, err = h.GetObjectByName(object_use)
 		if err != "" {
 			result(err)
 			return
 		}
 	}
 
+	if h.current_object == nil {
+		result("error objeto para realizar test no definido ej: t.Name_object_use: ObjectName")
+		return
+	}
 	// test asynchronous actions:
 	h.WaitFor(h.milliseconds, func() {
 		var err string
 
-		if t[h.Click_menu_module] != "" {
-			h.Log(this+h.Click_menu_module+":", t[h.Click_menu_module])
-			err = h.ElementClicking(h.QuerySelectorMenuModule(t[h.Click_menu_module]))
+		if t.Click_menu_module != "" {
+			h.Log(this+h.Click_menu_module+":", t.Click_menu_module)
+			err = h.ElementClicking(h.QuerySelectorMenuModule(t.Click_menu_module))
 
-		} else if t[h.Clicking_ID] != "" {
-			h.Log(this+h.Clicking_ID+":", t[h.Clicking_ID])
-			err = h.current_object.ClickingID(t[h.Clicking_ID])
+		} else if t.Clicking_ID != "" {
+			h.Log(this+h.Clicking_ID+":", t.Clicking_ID)
+			err = h.current_object.ClickingID(t.Clicking_ID)
 
-		} else if t[h.Click_object_element] != "" {
-			h.Log(this+h.Click_object_element+":", t[h.Click_object_element])
-			err = h.current_object.ClickObjectElement(t[h.Click_object_element])
+		} else if t.Click_object_element != "" {
+			h.Log(this+h.Click_object_element+":", t.Click_object_element)
+			err = h.current_object.ClickObjectElement(t.Click_object_element)
 
-		} else if t[h.Form_complete] != "" {
-			h.Log(this+h.Form_complete+":", t[h.Form_complete])
+		} else if t.Form_complete != "" {
 
-			if len(t) < 2 {
+			h.Log(this+h.Form_complete+":", t.Form_complete)
+
+			if len(t.Data) == 0 {
 				err = this + "no llego data para completar formulario"
-				h.Log(t)
 			} else {
-				err = h.FormComplete(t[h.Form_complete], t)
+
+				err = h.FormComplete(t.Form_complete, t.Data, true, false)
 			}
 
 		}
