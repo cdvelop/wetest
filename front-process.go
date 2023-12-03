@@ -62,6 +62,10 @@ func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
 				err = h.FormComplete(t.Form_complete, t.Data, true, false)
 			}
 
+		} else if t.Clear_all_table_data != "" {
+			h.Log(this+h.Clear_all_table_data+":", t.Clear_all_table_data)
+			err = h.ClearAllTableDataInDB(t.Clear_all_table_data)
+
 		}
 
 		result(err)

@@ -2,10 +2,10 @@ module github.com/cdvelop/wetest
 
 go 1.20
 
-require github.com/cdvelop/model v0.0.74
+require github.com/cdvelop/model v0.0.75
 
 require (
-	github.com/cdvelop/object v0.0.38
+	github.com/cdvelop/object v0.0.39
 	github.com/cdvelop/strings v0.0.7
 )
 
