@@ -6,7 +6,7 @@ import (
 )
 
 // ej: os.Args
-func AddBackendApiE2E(h *model.Handlers, osArgs []string) (err string) {
+func AddBackendApiE2E(h *model.Handlers, osArgs []string) (out *WeTest, err string) {
 	const this = "AddBackendE2EtestsAPI error "
 	var required_tests []string
 	for _, arg := range osArgs {
@@ -14,7 +14,7 @@ func AddBackendApiE2E(h *model.Handlers, osArgs []string) (err string) {
 			var new_test string
 			err = strings.ExtractTwoPointArgument(arg, &new_test)
 			if err != "" {
-				return this + err
+				return nil, this + err
 			}
 			required_tests = append(required_tests, new_test)
 		}
@@ -26,12 +26,13 @@ func AddBackendApiE2E(h *model.Handlers, osArgs []string) (err string) {
 
 		t, err := AddE2ETestHandler(h)
 		if err != "" {
-			return this + err
+			return nil, this + err
 		}
 		t.required_tests = required_tests
 
 		h.AddObjects(t.Object)
 
+		out = t
 	}
 
 	return

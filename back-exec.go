@@ -1,22 +1,26 @@
 package wetest
 
 import (
+	"fmt"
 	"strconv"
 )
 
-func (h WeTest) execBackendActions(uses_case ...UseCase) {
-	h.Log("EJECUTANDO execBackendActions....")
+func (h *WeTest) ExecBackendActions(uses_case ...UseCase) {
+	fmt.Println("EJECUTANDO execBackendActions....")
 	for i, uc := range uses_case {
-		var this = "-test " + strconv.Itoa(i) + " "
+		if uc.BackendExecute {
 
-		for _, t := range uc.TestActions {
+			var this = "-backend-test " + strconv.Itoa(i) + " "
 
-			h.Log(this+h.Set_server_date+":", t.Set_server_date)
+			for _, t := range uc.TestActions {
 
-			if t.Set_server_date != "" {
-				h.SetDate(t.Set_server_date)
+				h.Log(this+h.Set_server_date+":", t.Set_server_date)
+
+				if t.Set_server_date != "" {
+					h.SetDate(t.Set_server_date)
+				}
+
 			}
-
 		}
 	}
 }
