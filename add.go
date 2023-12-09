@@ -7,11 +7,14 @@ import (
 
 var wt *WeTest
 
-func AddE2ETestHandler(h *model.Handlers) (t *WeTest, err string) {
+func AddE2ETestHandler(log model.Logger) (t *WeTest, err string) {
 
 	if wt == nil {
 
-		m := &model.Module{ModuleName: "wetest"}
+		m := &model.Module{
+			ModuleName: "wetest",
+			Handlers:   &model.Handlers{Logger: log},
+		}
 
 		wt = &WeTest{}
 
@@ -19,11 +22,15 @@ func AddE2ETestHandler(h *model.Handlers) (t *WeTest, err string) {
 		if err != "" {
 			return nil, "AddE2ETestHandler " + err
 		}
+
 		wt.Object.Module = m
-		m.Handlers = h
 		wt.Object = object
 
 	}
 
 	return wt, ""
+}
+
+func (w *WeTest) AddHandlersToWetest(h *model.Handlers) {
+	*w.Module.Handlers = *h
 }

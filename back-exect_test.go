@@ -40,7 +40,7 @@ func TestServerActions(t *testing.T) {
 	// 	},
 	// }
 
-	// w.AddFrontUsesCaseTest(usesCase...)
+	// w.AddUsesCaseTest(usesCase...)
 
 	// e2eTests := w.LoadE2Etests([]string{"test"})
 	// if e2eTests == "" {

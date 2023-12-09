@@ -7,11 +7,12 @@ import (
 type WeTest struct {
 	*model.Object
 
-	Required_tests string
-	required_tests []string // nombre de la pruebas solicitada a ejecutar
+	name_required_tests map[string]bool // nombre de la pruebas solicitadas a ejecutar
 
 	// casos de usos a evaluar
-	uses_case []UseCase
+	backend_uses_case    []UseCase
+	front_uc_before_view []UseCase
+	front_uc_after_view  []UseCase
 
 	milliseconds   int
 	current_object *model.Object
@@ -21,7 +22,8 @@ type WeTest struct {
 
 type UseCase struct {
 	BackendExecute bool
-	Module         string
+	RunBeforeView  bool   // si se ejecuta antes de cargar la vista
+	TestName       string //ej "session" = run params "test:session"
 	Description    string
 	TestActions    []TestAction
 }

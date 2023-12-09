@@ -1,49 +1,19 @@
 package wetest
 
-func (t *WeTest) RunE2EfrontTests() {
-	const this = "RunE2EfrontTests "
+import "github.com/cdvelop/model"
 
-	// string_content, err := h.SelectContent("meta[name='JsonBootTests']", "content")
-	// if err != "" {
-	// 	h.Log(this + err)
-	// 	return
-	// }
-	// // h.Log("CONTENIDO:", string_content)
+func (t *WeTest) ExecuteBeforeAction(h *model.Handlers) {
+	t.Module.Handlers = h
+	t.Log("- INICIANDO Before View tests -")
 
-	// if string_content == "none" {
-	// 	h.Log(this + "sin tests para ejecutar")
-	// 	return
-	// }
-	t.Log("- INICIANDO tests -")
+	t.runTestsSequentially(t.front_uc_before_view, 0, 0, t.resultTests)
+}
 
-	for _, v := range t.uses_case {
+func (t *WeTest) RunE2EfrontTestsAfterView() {
 
-		t.Log(v.Description)
-	}
-	// t.FetchAdapter.SendOneRequest("GET", "read", t.ObjectName+"2", map[string]string{t.Required_tests: "ok"}, func(result []map[string]string, err string) {
+	t.Log("- INICIANDO After View tests -")
 
-	// 	if err != "" {
-	// 		t.Log(this + err)
-	// 		return
-	// 	}
-
-	// })
-	// t.FetchAdapter.SendOneRequest("POST", "read", t.ObjectName, map[string]string{t.Required_tests: "ok"}, func(result []map[string]string, err string) {
-
-	// 	if err != "" {
-	// 		t.Log(this + err)
-	// 		return
-	// 	}
-
-	// })
-
-	// usesCaseTests, err := h.DecodeResponses([]byte(string_content))
-	// if err != "" {
-	// 	h.Log(this + err)
-	// 	return
-	// }
-
-	t.runTestsSequentially(t.uses_case, 0, 0, t.resultTests)
+	t.runTestsSequentially(t.front_uc_after_view, 0, 0, t.resultTests)
 }
 
 func (h *WeTest) runTestsSequentially(useCaseTests []UseCase, testIndex int, dataIndex int, result func(err string)) {
