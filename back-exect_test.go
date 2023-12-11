@@ -48,7 +48,7 @@ func TestServerActions(t *testing.T) {
 	// 	return
 	// }
 
-	// today := h.ToDay("")
+	// today := h.DateToDay("")
 	// if today != date_required {
 	// 	t.Fatalf("\nse esperaba que la fecha\n=>fuera:\n%v\n\n=>pero se obtuvo:\n%v\n", date_required, today)
 	// 	return
