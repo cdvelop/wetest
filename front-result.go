@@ -1,12 +1,12 @@
 package wetest
 
 func (h WeTest) resultTests(err string) {
-	h.Log("- RESULTADO tests -")
 
+	var OK = "OK"
 	if err != "" {
-		h.Log(err)
-	} else {
-		h.Log("OK")
+		OK = ""
 	}
+
+	h.Log("- RESULTADO tests -", OK, err)
 
 }
