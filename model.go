@@ -32,7 +32,9 @@ type TestAction struct {
 	//Espera en milisegundos ej 200,2000 = 2 seg
 	Wait string
 	// setear la fecha del servidor a un dia especifico ej: 2023-12-24
-	Set_server_date string
+	Set_backend_date string
+	// setear la fecha en el fronted a un dia especifico ej: 2023-12-24
+	Set_frontend_date string
 	// objeto a usar para la acción
 	Name_object_use string
 	// click id de un objeto especifico
@@ -49,8 +51,6 @@ type TestAction struct {
 	Clear_all_table_data string
 	// contar cuantos elementos existen en: la vista, db cliente, db servidor
 	Count *Count
-	// parámetros de lectura base de datos
-	ReadDBParams model.ReadParams
 	//data pare realizar la prueba
 	Data map[string]string
 }

@@ -4,9 +4,18 @@ import (
 	"strconv"
 )
 
-func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
+func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func(err string)) {
 
 	var this = "-test " + strconv.Itoa(i) + " "
+
+	if from.RunBeforeView && t.Set_frontend_date != "" {
+		if t.Set_frontend_date != "" {
+			h.Log(this+h.Set_frontend_date+":", t.Set_frontend_date)
+			h.SetDate(t.Set_frontend_date)
+		}
+		result("")
+		return
+	}
 
 	h.milliseconds += 100
 	var err string

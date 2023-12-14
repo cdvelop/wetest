@@ -15,9 +15,9 @@ func (h *WeTest) ExecBackendActions() {
 
 			for _, t := range uc.TestActions {
 
-				if t.Set_server_date != "" {
-					h.Log(this+h.Set_server_date+":", t.Set_server_date)
-					h.SetDate(t.Set_server_date)
+				if t.Set_backend_date != "" {
+					h.Log(this+h.Set_backend_date+":", t.Set_backend_date)
+					h.SetDate(t.Set_backend_date)
 				}
 			}
 

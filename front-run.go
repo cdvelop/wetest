@@ -31,7 +31,7 @@ func (h *WeTest) runTestsSequentially(useCaseTests []UseCase, testIndex int, dat
 		return
 	}
 
-	h.processUnitTest(dataIndex, test.TestActions[dataIndex], func(err string) {
+	h.processUnitTest(&test, dataIndex, test.TestActions[dataIndex], func(err string) {
 		if err != "" {
 			// h.Log("NO CONTINUAR TEST:", dataIndex)
 			result(err)

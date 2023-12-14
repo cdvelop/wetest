@@ -26,7 +26,7 @@ func TestServerActions(t *testing.T) {
 	// 		Object:  "",
 	// 		Message: "cambiamos a fecha en el servidor",
 	// 		Data: []map[string]string{
-	// 			{b.Set_server_date: date_required},
+	// 			{b.Set_backend_date: date_required},
 	// 		},
 	// 	},
 	// 	{
