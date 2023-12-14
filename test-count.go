@@ -7,51 +7,51 @@ import (
 )
 
 func (h WeTest) Count_Elements(this string, t TestAction, result func(err string)) {
-	const a = "Count_Elements "
-	var err string
-	h.Log(this+".Count_Elements:", t.Expected)
+	const a = "Count Elements "
 
-	expected_value, ok := t.Expected.(int)
-	if !ok {
-		err = a + "la expectativa debe ser un valor tipo int para poder contar"
-	} else {
-		var ex = "se esperaba:" + strconv.Itoa(expected_value) + " pero se obtuvo:"
-		// h.Log("SE ESPERA:", expected_value)
+	h.Log(this + a + h.obj.ObjectName)
 
-		var total_elements int
-		total_elements, err = h.obj.CountViewElements()
-		if err == "" {
+	// var ex = "se esperaba:" + strconv.Itoa(expected_value) + " pero se obtuvo:"
+	// h.Log("SE ESPERA:", expected_value)
 
-			if total_elements != expected_value {
-				err = a + ex + strconv.Itoa(total_elements) + " elementos en la vista"
-			} else {
+	ui_elements, err := h.obj.CountViewElements()
+	if err == "" {
 
-				// consultamos la base de datos
-				h.ReadAsyncDataDB(t.ReadDBParams, func(r model.ReadResult) {
+		if ui_elements != t.Count.Expected.UI {
+			result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.UI) + " pero se obtuvo:" + strconv.Itoa(ui_elements) + " elementos en la interfaz del usuario")
+			return
+		} else {
 
-					if r.Error != "" {
-						result(a + r.Error)
-						return
-					}
+			// consultamos la base de datos frontend
+			h.ReadAsyncDataDB(model.ReadParams{
+				FROM_TABLE:      h.obj.Table,
+				WHERE:           []string{t.Count.WHERE},
+				SEARCH_ARGUMENT: t.Count.ARGUMENT,
+			}, func(F model.ReadResult) {
 
-					if len(r.DataString) != expected_value {
-						result(a + ex + strconv.Itoa(len(r.DataString)) + " elementos en la base de datos del cliente")
-					} else {
-						// enviamos la petición al servidor para contar los elementos
-						h.SendOneRequest("POST", "read", h.obj.ObjectName, map[string]string{t.ReadDBParams.WHERE[0]: t.ReadDBParams.SEARCH_ARGUMENT}, func(serverResp []map[string]string, err string) {
+				if F.Error != "" {
+					result(a + F.Error)
+					return
+				}
 
-							if err != "" {
-								result(a + err)
-								return
-							}
+				if len(F.DataString) != t.Count.Expected.DBFrontend {
+					result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.DBFrontend) + " pero se obtuvo:" + strconv.Itoa(len(F.DataString)) + " elementos en la db del frontend")
+				} else {
+					// enviamos la petición al servidor para contar los elementos
+					h.SendOneRequest("POST", "read", h.obj.ObjectName, map[string]string{t.Count.WHERE: t.Count.ARGUMENT}, func(serverResp []map[string]string, err string) {
 
-							if len(serverResp) != expected_value {
-								result(a + ex + strconv.Itoa(len(serverResp)) + " elementos en la base de datos en el servidor")
-							}
-						})
-					}
-				})
-			}
+						if err != "" {
+							result(a + err)
+							return
+						}
+
+						if len(serverResp) != t.Count.Expected.DBBackend {
+							result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.DBBackend) + " pero se obtuvo:" + strconv.Itoa(len(serverResp)) + " elementos en la base de datos del servidor")
+						}
+					})
+				}
+			})
 		}
 	}
+
 }

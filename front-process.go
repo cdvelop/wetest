@@ -73,7 +73,7 @@ func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
 				err = h.FormComplete(t.Form_complete, t.Data, true, false)
 			}
 
-		} else if t.Count_Elements {
+		} else if t.Count != nil {
 			h.Count_Elements(this, t, result)
 			return
 		}

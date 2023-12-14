@@ -48,11 +48,25 @@ type TestAction struct {
 	// borrar la data de tabla por su nombre
 	Clear_all_table_data string
 	// contar cuantos elementos existen en: la vista, db cliente, db servidor
-	Count_Elements bool
+	Count *Count
 	// parámetros de lectura base de datos
 	ReadDBParams model.ReadParams
 	//data pare realizar la prueba
 	Data map[string]string
-	// expectativa
-	Expected any
+}
+
+type Count struct {
+	ReadParams
+	Expected ExpectedCount
+}
+
+type ReadParams struct {
+	WHERE    string //ej: id
+	ARGUMENT string //ej: 12325
+}
+
+type ExpectedCount struct {
+	UI         int //interfaz usuario
+	DBFrontend int
+	DBBackend  int
 }
