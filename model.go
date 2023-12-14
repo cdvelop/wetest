@@ -14,8 +14,8 @@ type WeTest struct {
 	front_uc_before_view []UseCase
 	front_uc_after_view  []UseCase
 
-	milliseconds   int
-	current_object *model.Object
+	milliseconds int
+	obj          *model.Object
 
 	TestAction
 }
@@ -47,6 +47,12 @@ type TestAction struct {
 	Form_existing_add string
 	// borrar la data de tabla por su nombre
 	Clear_all_table_data string
+	// contar cuantos elementos existen en: la vista, db cliente, db servidor
+	Count_Elements bool
+	// parámetros de lectura base de datos
+	ReadDBParams model.ReadParams
 	//data pare realizar la prueba
 	Data map[string]string
+	// expectativa
+	Expected any
 }

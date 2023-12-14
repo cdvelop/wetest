@@ -1,6 +1,8 @@
 package wetest
 
-import "strconv"
+import (
+	"strconv"
+)
 
 func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
 
@@ -26,7 +28,7 @@ func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
 	}
 
 	if object_use != "" {
-		h.current_object, err = h.GetObjectByName(object_use)
+		h.obj, err = h.GetObjectByName(object_use)
 		if err != "" {
 			result(err)
 			return
@@ -40,7 +42,7 @@ func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
 		return
 	}
 
-	if h.current_object == nil {
+	if h.obj == nil {
 		result("error objeto para realizar test no definido ej: t.Name_object_use: ObjectName")
 		return
 	}
@@ -54,11 +56,11 @@ func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
 
 		} else if t.Clicking_ID != "" {
 			h.Log(this+h.Clicking_ID+":", t.Clicking_ID)
-			err = h.current_object.ClickingID(t.Clicking_ID)
+			err = h.obj.ClickingID(t.Clicking_ID)
 
 		} else if t.Click_object_element != "" {
 			h.Log(this+h.Click_object_element+":", t.Click_object_element)
-			err = h.current_object.ClickObjectElement(t.Click_object_element)
+			err = h.obj.ClickObjectElement(t.Click_object_element)
 
 		} else if t.Form_complete != "" {
 
@@ -71,6 +73,9 @@ func (h *WeTest) processUnitTest(i int, t TestAction, result func(err string)) {
 				err = h.FormComplete(t.Form_complete, t.Data, true, false)
 			}
 
+		} else if t.Count_Elements {
+			h.Count_Elements(this, t, result)
+			return
 		}
 
 		result(err)
