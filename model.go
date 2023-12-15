@@ -47,8 +47,8 @@ type TestAction struct {
 	Form_complete string
 	// añadir data a la existente
 	Form_existing_add string
-	// borrar la data de tabla por su nombre
-	Clear_all_table_data string
+	// borrar la data de tablas por su nombre
+	Clear_all_table_data []string
 	// contar cuantos elementos existen en: la vista, db cliente, db servidor
 	Count *Count
 	//data pare realizar la prueba

@@ -44,9 +44,9 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 		}
 	}
 
-	if t.Clear_all_table_data != "" {
-		h.Log(this+h.Clear_all_table_data+":", t.Clear_all_table_data)
-		err = h.ClearAllTableDataInDB(t.Clear_all_table_data)
+	if len(t.Clear_all_table_data) != 0 {
+		h.Log(this+"Clear_all_table_data:", t.Clear_all_table_data)
+		err = h.ClearAllTableDataInDB(t.Clear_all_table_data...)
 		result(err)
 		return
 	}
