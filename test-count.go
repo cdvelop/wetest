@@ -24,21 +24,20 @@ func (h WeTest) Count_Elements(this string, t TestAction, result func(err string
 
 			// consultamos la base de datos frontend
 			h.ReadAsyncDataDB(model.ReadParams{
-				FROM_TABLE:      h.obj.Table,
-				WHERE:           []string{t.Count.WHERE},
-				SEARCH_ARGUMENT: t.Count.ARGUMENT,
-			}, func(F model.ReadResult) {
+				FROM_TABLE: h.obj.Table,
+				WHERE:      t.Count.ReadParams,
+			}, func(F *model.ReadResults, err string) {
 
-				if F.Error != "" {
-					result(a + F.Error)
+				if err != "" {
+					result(a + err)
 					return
 				}
 
-				if len(F.DataString) != t.Count.Expected.DBFrontend {
-					result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.DBFrontend) + " pero se obtuvo:" + strconv.Itoa(len(F.DataString)) + " elementos en la db del frontend")
+				if len(F.ResultsString) != t.Count.Expected.DBFrontend {
+					result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.DBFrontend) + " pero se obtuvo:" + strconv.Itoa(len(F.ResultsString)) + " elementos en la db del frontend")
 				} else {
 					// enviamos la petición al servidor para contar los elementos
-					h.SendOneRequest("POST", "read", h.obj.ObjectName, map[string]string{t.Count.WHERE: t.Count.ARGUMENT}, func(serverResp []map[string]string, err string) {
+					h.SendOneRequest("POST", "read", h.obj.ObjectName, t.Count.ReadParams, func(serverResp []map[string]string, err string) {
 
 						if err != "" {
 							result(a + err)

@@ -56,13 +56,8 @@ type TestAction struct {
 }
 
 type Count struct {
-	ReadParams
-	Expected ExpectedCount
-}
-
-type ReadParams struct {
-	WHERE    string //ej: id
-	ARGUMENT string //ej: 12325
+	ReadParams []map[string]string //where
+	Expected   ExpectedCount
 }
 
 type ExpectedCount struct {
