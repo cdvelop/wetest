@@ -2,8 +2,8 @@ package wetest
 
 import "github.com/cdvelop/model"
 
-func (t *WeTest) ExecuteBeforeAction(h *model.Handlers) {
-	t.Module.Handlers = h
+func (t *WeTest) ExecuteBeforeAction(h *model.MainHandler) {
+	t.Module.MainHandler = h
 	t.Log("- INICIANDO Before View tests -")
 
 	t.runTestsSequentially(t.front_uc_before_view, 0, 0, t.resultTests)

@@ -7,7 +7,7 @@ import (
 func TestServerActions(t *testing.T) {
 	// const date_required = "2023-08-29"
 
-	// h := &model.Handlers{
+	// h := &model.MainHandler{
 	// 	TimeAdapter: timeserver.Add(),
 	// 	Logger:      logserver.Add(),
 	// }

@@ -6,7 +6,7 @@ import (
 )
 
 // ej: os.Args
-func AddBackendApiE2E(h *model.Handlers, osArgs []string) (out *WeTest, err string) {
+func AddBackendApiE2E(h *model.MainHandler, osArgs []string) (out *WeTest, err string) {
 	const this = "AddBackendE2EtestsAPI error "
 	var name_required_tests = map[string]bool{}
 	for _, arg := range osArgs {
@@ -32,7 +32,7 @@ func AddBackendApiE2E(h *model.Handlers, osArgs []string) (out *WeTest, err stri
 
 		t.name_required_tests = name_required_tests
 
-		h.AddObjects(t.Object)
+		h.AddModules(t.Object.Module)
 
 		out = t
 	}

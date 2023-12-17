@@ -12,8 +12,8 @@ func AddE2ETestHandler(log model.Logger) (t *WeTest, err string) {
 	if wt == nil {
 
 		m := &model.Module{
-			ModuleName: "wetest",
-			Handlers:   &model.Handlers{Logger: log},
+			ModuleName:  "wetest",
+			MainHandler: &model.MainHandler{Logger: log},
 		}
 
 		wt = &WeTest{}
@@ -31,6 +31,6 @@ func AddE2ETestHandler(log model.Logger) (t *WeTest, err string) {
 	return wt, ""
 }
 
-func (w *WeTest) AddHandlersToWetest(h *model.Handlers) {
-	*w.Module.Handlers = *h
+func (w *WeTest) AddHandlersToWetest(h *model.MainHandler) {
+	*w.Module.MainHandler = *h
 }
