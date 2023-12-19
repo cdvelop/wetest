@@ -37,7 +37,7 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 	}
 
 	if object_use != "" {
-		h.obj, err = h.MainHandlerGetObjectByName(object_use)
+		h.obj, err = h.GetObjectByName(object_use)
 		if err != "" {
 			result(err)
 			return
@@ -78,8 +78,8 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 			if len(t.Data) == 0 {
 				err = this + "no llego data para completar formulario"
 			} else {
-
-				err = h.FormComplete(true, false)
+				h.obj.FormData = t.Data
+				err = h.FormComplete(t.Form_complete, true, false)
 			}
 
 		} else if t.Count != nil {

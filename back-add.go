@@ -32,7 +32,7 @@ func AddBackendApiE2E(h *model.MainHandler, osArgs []string) (out *WeTest, err s
 
 		t.name_required_tests = name_required_tests
 
-		h.MainHandlerAddModules(t.Object.Module)
+		h.AddModules(t.Object.Module)
 
 		out = t
 	}
