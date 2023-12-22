@@ -20,11 +20,8 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 	h.milliseconds += 100
 	var err string
 
-	if t.Wait != "" {
-		wait, e := strconv.Atoi(t.Wait)
-		if e == nil {
-			h.milliseconds += wait
-		}
+	if t.Wait != 0 {
+		h.milliseconds += t.Wait
 	}
 
 	var object_use string
@@ -55,39 +52,37 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 		result("error objeto para realizar test no definido ej: t.Name_object_use: ObjectName")
 		return
 	}
+
 	// test asynchronous actions:
 	h.WaitFor(h.milliseconds, func() {
 		var err string
 
-		if t.Click_menu_module != "" {
-			h.Log(this+h.Click_menu_module+":", t.Click_menu_module)
-			err = h.ElementClicking(h.QuerySelectorMenuModule(t.Click_menu_module))
+		if t.Count != nil {
+			h.Count_Elements(this, t, func(err string) {
 
-		} else if t.Clicking_ID != "" {
-			h.Log(this+h.Clicking_ID+":", t.Clicking_ID)
-			err = h.obj.ClickingID(t.Clicking_ID)
+				result(err)
 
-		} else if t.Click_object_element != "" {
-			h.Log(this+h.Click_object_element+":", t.Click_object_element)
-			err = h.obj.ClickObjectElement(t.Click_object_element)
+			})
+		} else {
 
-		} else if t.Form_complete != "" {
+			if t.Click_menu_module != "" {
+				h.Log(this+h.Click_menu_module+":", t.Click_menu_module)
+				err = h.ElementClicking(h.QuerySelectorMenuModule(t.Click_menu_module))
 
-			h.Log(this+h.Form_complete+":", t.Form_complete)
+			} else if t.Clicking_ID != "" {
+				h.Log(this+h.Clicking_ID+":", t.Clicking_ID)
+				err = h.obj.ClickingID(t.Clicking_ID)
 
-			if len(t.Data) == 0 {
-				err = this + "no llego data para completar formulario"
-			} else {
-				h.obj.FormData = t.Data
-				err = h.FormComplete(t.Form_complete, true, false)
+			} else if t.Click_object_element != "" {
+				h.Log(this+h.Click_object_element+":", t.Click_object_element)
+				err = h.obj.ClickObjectElement(t.Click_object_element)
+
+			} else if t.Form_complete != "" {
+
+				err = h.SiMulateUserFormComplete(&t, this)
 			}
 
-		} else if t.Count != nil {
-			h.Count_Elements(this, t, result)
-			return
+			result(err)
 		}
-
-		result(err)
 	})
-
 }

@@ -19,7 +19,6 @@ func (h WeTest) Count_Elements(this string, t TestAction, result func(err string
 
 		if ui_elements != t.Count.Expected.UI {
 			result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.UI) + " pero se obtuvo:" + strconv.Itoa(ui_elements) + " elementos en la interfaz del usuario")
-			return
 		} else {
 
 			// consultamos la base de datos frontend
@@ -35,20 +34,25 @@ func (h WeTest) Count_Elements(this string, t TestAction, result func(err string
 
 				if len(F.ResultsString) != t.Count.Expected.DBFrontend {
 					result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.DBFrontend) + " pero se obtuvo:" + strconv.Itoa(len(F.ResultsString)) + " elementos en la db del frontend")
-				} else {
-					// enviamos la petición al servidor para contar los elementos
-					h.SendOneRequest("POST", "read", h.obj.ObjectName, t.Count.ReadParams, func(serverResp []map[string]string, err string) {
-
-						if err != "" {
-							result(a + err)
-							return
-						}
-
-						if len(serverResp) != t.Count.Expected.DBBackend {
-							result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.DBBackend) + " pero se obtuvo:" + strconv.Itoa(len(serverResp)) + " elementos en la base de datos del servidor")
-						}
-					})
+					return
 				}
+
+				// enviamos la petición al servidor para contar los elementos
+				h.SendOneRequest("POST", "read", h.obj.ObjectName, t.Count.ReadParams, func(serverResp []map[string]string, err string) {
+
+					if err != "" {
+						result(a + err)
+						return
+					}
+
+					if len(serverResp) != t.Count.Expected.DBBackend {
+						result(a + "se esperaba:" + strconv.Itoa(t.Count.Expected.DBBackend) + " pero se obtuvo:" + strconv.Itoa(len(serverResp)) + " elementos en la base de datos del servidor")
+						return
+					}
+
+					result("")
+				})
+
 			})
 		}
 	}

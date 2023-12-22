@@ -30,7 +30,7 @@ type UseCase struct {
 
 type TestAction struct {
 	//Espera en milisegundos ej 200,2000 = 2 seg
-	Wait string
+	Wait int
 	// setear la fecha del servidor a un dia especifico ej: 2023-12-24
 	Set_backend_date string
 	// setear la fecha en el fronted a un dia especifico ej: 2023-12-24
