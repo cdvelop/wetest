@@ -34,7 +34,7 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 	}
 
 	if object_use != "" {
-		h.obj, err = h.GetObjectByName(object_use)
+		h.obj, err = h.GetObjectBY(object_use, "")
 		if err != "" {
 			result(err)
 			return
