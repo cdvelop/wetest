@@ -4,8 +4,8 @@ import (
 	"strconv"
 )
 
-func (h *WeTest) ExecBackendActions() {
-	const this = "ExecBackendActions error "
+func (h *WeTest) ExecBackendActions() (err string) {
+	const e = "ExecBackendActions error "
 
 	for i, uc := range h.backend_uses_case {
 
@@ -18,12 +18,23 @@ func (h *WeTest) ExecBackendActions() {
 				if t.Set_backend_date != "" {
 					h.Log(this+h.Set_backend_date+":", t.Set_backend_date)
 					h.SetDate(t.Set_backend_date)
+				} else if t.DB_Insert_Data_Table != "" {
+
+					// fmt.Println("DB_Insert_Data_Table DATA:", t.Data)
+
+					err = h.DB_Insert_Data_Table(this, t)
+				}
+
+				if err != "" {
+					return this + e + err
 				}
 			}
 
 		} else {
-			h.Log(this+"nombre test:"+uc.TestName, "no existe")
+			h.Log(e+"nombre test:"+uc.TestName, "no existe")
 		}
 
 	}
+
+	return
 }

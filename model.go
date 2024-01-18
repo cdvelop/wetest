@@ -37,6 +37,16 @@ type TestAction struct {
 	Set_frontend_date string
 	// objeto a usar para la acción
 	Name_object_use string
+
+	// Crear Objeto By Post use Data
+	Object_Post_Create bool
+	// Actualiza Objeto By Post use Data
+	Object_Post_Update bool
+	// Borrar Objeto By Post use Data
+	Object_Post_Delete bool
+
+	DB_Insert_Data_Table string
+
 	// click id de un objeto especifico
 	Clicking_ID string // ej Click
 	// click en le menu del modulo
@@ -52,7 +62,7 @@ type TestAction struct {
 	// contar cuantos elementos existen en: la vista, db cliente, db servidor
 	Count *Count
 	//data pare realizar la prueba
-	Data map[string]string
+	Data []map[string]string
 }
 
 type Count struct {

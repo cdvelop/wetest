@@ -57,7 +57,14 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 	h.WaitFor(h.milliseconds, func() {
 		var err string
 
-		if t.Count != nil {
+		if t.Object_Post_Create {
+
+			h.Object_Post_Create(this, t, func(err string) {
+
+				result(err)
+			})
+
+		} else if t.Count != nil {
 			h.Count_Elements(this, t, func(err string) {
 
 				result(err)

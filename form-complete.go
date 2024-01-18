@@ -7,7 +7,7 @@ func (h WeTest) SiMulateUserFormComplete(t *TestAction, this string) (err string
 	if len(t.Data) == 0 {
 		err = this + "no llego data para completar formulario"
 	} else {
-		err = h.FormComplete(t.Form_complete, t.Data, true, false)
+		err = h.FormComplete(t.Form_complete, t.Data[0], true, false)
 	}
 
 	return
