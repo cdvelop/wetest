@@ -60,7 +60,16 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 		if t.Object_Post_Create {
 
 			h.Object_Post_Create(this, t, func(err string) {
+				result(err)
+			})
 
+		} else if t.Object_Post_Update {
+			h.Object_Post_Update(this, t, func(err string) {
+				result(err)
+			})
+
+		} else if t.Object_Post_Delete {
+			h.Object_Post_Delete(this, t, func(err string) {
 				result(err)
 			})
 
@@ -83,6 +92,14 @@ func (h *WeTest) processUnitTest(from *UseCase, i int, t TestAction, result func
 			} else if t.Click_object_element != "" {
 				h.Log(this+h.Click_object_element+":", t.Click_object_element)
 				err = h.obj.ClickObjectElement(t.Click_object_element)
+
+			} else if t.Clicking_object_name != "" {
+				h.Log(this+h.Clicking_object_name+":", t.Clicking_object_name)
+
+				h.obj, err = h.GetObjectBY(t.Clicking_object_name, "")
+				if err == "" {
+					err = h.obj.ClickingID()
+				}
 
 			} else if t.Form_complete != "" {
 

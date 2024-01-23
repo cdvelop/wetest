@@ -46,9 +46,12 @@ type TestAction struct {
 	Object_Post_Delete bool
 
 	DB_Insert_Data_Table string
+	DB_Delete_Data_Table string
 
 	// click id de un objeto especifico
 	Clicking_ID string // ej Click
+	// click en el objeto por su nombre
+	Clicking_object_name string
 	// click en le menu del modulo
 	Click_menu_module string
 	// click en elementos del modulo del objeto ej: "button[name='btn_cancel']"

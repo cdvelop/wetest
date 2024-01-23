@@ -19,10 +19,11 @@ func (h *WeTest) ExecBackendActions() (err string) {
 					h.Log(this+h.Set_backend_date+":", t.Set_backend_date)
 					h.SetDate(t.Set_backend_date)
 				} else if t.DB_Insert_Data_Table != "" {
-
 					// fmt.Println("DB_Insert_Data_Table DATA:", t.Data)
-
 					err = h.DB_Insert_Data_Table(this, t)
+				} else if t.DB_Delete_Data_Table != "" {
+
+					err = h.DB_Delete_Data_Table(this, t)
 				}
 
 				if err != "" {
